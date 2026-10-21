@@ -10,6 +10,7 @@
    "" の間に、URLをそのまま貼りつけてください。 */
 var YOUTUBE_URL = "https://youtu.be/Ykdn5eEfq2I";   // インタビュー動画（YouTube）のURL
 var ORDER_URL   = "https://forms.gle/7gFoUogmFqMeprSc6";   // 注文フォームのURL
+var PAY_URL     = "https://square.link/u/HIVLdX5g?src=sheet";   // 支払いリンク（Square）のURL
 /* ▲▲▲ ここまで ▲▲▲ */
 </script>
 <meta name="robots" content="noindex, nofollow">
@@ -248,8 +249,12 @@ p{margin:0}
 .apply{margin-top:clamp(40px,6vw,56px);padding:clamp(24px,4vw,36px);background:var(--paper);color:var(--ink);border-radius:10px;max-width:640px}
 .agree{margin-top:16px;display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:#FFE3F0;border-radius:6px;font-weight:900;cursor:pointer}
 .agree input{flex:none;width:24px;height:24px;margin:2px 0 0;accent-color:var(--pink)}
-.apply__btn{margin-top:16px;display:flex;min-height:58px;background:var(--ink);color:var(--paper);font-size:18px}
+.apply__btn{margin-top:16px;display:flex;text-align:center;line-height:1.4;min-height:58px;background:var(--ink);color:var(--paper);font-size:18px}
 .apply__btn[aria-disabled="true"]{background:var(--gray-3);cursor:not-allowed}
+.apply__step{margin-top:22px;display:flex;align-items:center;gap:10px;font-size:16px}
+.apply__step b{font-weight:900}
+.apply__no{flex:none;width:28px;height:28px;border-radius:50%;background:var(--pink);display:grid;place-items:center;font-family:var(--f-num);font-weight:800;font-size:17px}
+.apply__step + .apply__btn{margin-top:10px}
 .apply__note{margin-top:10px;font-size:13px;font-weight:700}
 .cautions{margin:16px 0 0;padding-left:1.3em;max-width:48em;font-size:15px;color:var(--soft)}
 .cautions li{margin-top:6px}
@@ -489,7 +494,8 @@ p{margin:0}
 <ol class="flow">
 <li><b>「ご確認ください」を読む</b>このすぐ下にあります。</li>
 <li><b>アレルギーと飲み方を確認する</b>ご家庭で、お子さんと一緒に。</li>
-<li><b>注文フォームから申し込む</b>確認のチェックを入れると開けます。</li>
+<li><b>注文フォームに入力する</b>確認のチェックを入れると開けます。</li>
+<li><b>支払いリンクからお支払い</b>注文フォームの送信後に、Squareで支払います。</li>
 </ol>
 <a class="btn" href="#order">ご確認くださいへ進む</a>
 </div>
@@ -530,14 +536,17 @@ p{margin:0}
 </ul>
 
 <div class="apply">
-<div style="font-weight:900;font-size:clamp(20px,2.4vw,26px)">注文フォーム</div>
+<div style="font-weight:900;font-size:clamp(20px,2.4vw,26px)">お申し込み</div>
 <p class="notice">今回は<b>マスカットヨーグルト味のみ</b>の注文受付です。</p>
 <label class="agree" for="agree">
 <input type="checkbox" id="agree">
 <span>上の内容を読み、アレルギーと飲み方を確認しました</span>
 </label>
-<a class="btn apply__btn" data-order aria-disabled="true">注文フォームを開く</a>
-<p class="apply__note" id="order-note">チェックを入れると、注文フォームを開けます。</p>
+<div class="apply__step"><span class="apply__no">1</span><b>注文フォームに入力</b></div>
+<a class="btn apply__btn" data-link="order" aria-disabled="true">注文フォームを開く</a>
+<div class="apply__step"><span class="apply__no">2</span><b>フォームを送信したら、お支払い</b></div>
+<a class="btn apply__btn" data-link="pay" aria-disabled="true">支払いリンクを開く（Square）</a>
+<p class="apply__note" id="order-note">チェックを入れると、ボタンを押せるようになります。</p>
 </div>
 
 <div class="foot">
@@ -579,29 +588,25 @@ p{margin:0}
     }
   }
 
-  var order = String(window.ORDER_URL || "").trim();
-  var hasForm = /^https?:\/\//.test(order);
-  var btn = document.querySelector("[data-order]");
+  var links = { order: String(window.ORDER_URL || "").trim(), pay: String(window.PAY_URL || "").trim() };
+  var labels = { order: "注文フォーム", pay: "支払いリンク" };
   var agree = document.getElementById("agree");
   var note = document.getElementById("order-note");
   function setOrder() {
-    if (!btn) return;
-    if (!hasForm) {
-      btn.textContent = "注文フォームは準備中です";
-      btn.removeAttribute("href");
-      btn.setAttribute("aria-disabled", "true");
-      note.textContent = "注文フォームは準備中です。決まりしだい、このページでご案内します。";
-      return;
-    }
-    if (agree && agree.checked) {
-      btn.href = order; btn.target = "_blank"; btn.rel = "noopener";
-      btn.removeAttribute("aria-disabled");
-      note.textContent = "ボタンを押すと、注文フォームが別の画面で開きます。";
-    } else {
-      btn.removeAttribute("href");
-      btn.setAttribute("aria-disabled", "true");
-      note.textContent = "チェックを入れると、注文フォームを開けます。";
-    }
+    var ok = !!(agree && agree.checked);
+    Array.prototype.forEach.call(document.querySelectorAll("[data-link]"), function (a) {
+      var key = a.getAttribute("data-link"), url = links[key];
+      if (!/^https?:\/\//.test(url)) {
+        a.textContent = labels[key] + "は準備中です";
+        a.removeAttribute("href"); a.setAttribute("aria-disabled", "true");
+      } else if (ok) {
+        a.href = url; a.target = "_blank"; a.rel = "noopener";
+        a.removeAttribute("aria-disabled");
+      } else {
+        a.removeAttribute("href"); a.setAttribute("aria-disabled", "true");
+      }
+    });
+    note.textContent = ok ? "ボタンを押すと、別の画面で開きます。" : "チェックを入れると、ボタンを押せるようになります。";
   }
   if (agree) agree.addEventListener("change", setOrder);
   setOrder();

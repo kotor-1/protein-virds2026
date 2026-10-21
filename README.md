@@ -11,9 +11,10 @@ HappinessAC と VIRDS の会員向けのご案内ページです。ページの�
 ```
 var YOUTUBE_URL = "https://youtu.be/Ykdn5eEfq2I";   // インタビュー動画（YouTube）のURL
 var ORDER_URL   = "https://forms.gle/7gFoUogmFqMeprSc6";   // 注文フォームのURL
+var PAY_URL     = "https://square.link/u/HIVLdX5g?src=sheet";   // 支払いリンク（Square）のURL
 ```
 
-- 注文フォームのボタンは、「確認しました」にチェックを入れたあとで押せるようになります。
+- 注文フォームと支払いリンクのボタンは、「確認しました」にチェックを入れたあとで押せるようになります。
 
 ## 知っておくこと
 
