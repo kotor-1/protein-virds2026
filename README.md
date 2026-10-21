@@ -10,10 +10,10 @@ HappinessAC と VIRDS の会員向けのご案内ページです。ページの�
 
 ```
 var YOUTUBE_URL = "https://youtu.be/Ykdn5eEfq2I";   // インタビュー動画（YouTube）のURL
-var ORDER_URL   = "";   // 注文フォームのURL
+var ORDER_URL   = "https://forms.gle/7gFoUogmFqMeprSc6";   // 注文フォームのURL
 ```
 
-- `ORDER_URL` を入れると、「確認しました」にチェックを入れたあとで注文フォームのボタンが押せるようになります。
+- 注文フォームのボタンは、「確認しました」にチェックを入れたあとで押せるようになります。
 
 ## 知っておくこと
 
