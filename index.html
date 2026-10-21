@@ -84,7 +84,13 @@ p{margin:0}
 .tag__price .unit{font-size:.26em;margin-left:.12em}
 .tag__foot{display:flex;flex-wrap:wrap;justify-content:center;gap:0 14px;padding:10px 34px 12px;border-top:2px solid var(--ink);font-weight:700;font-size:14px}
 .tag i{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--ink)}
-.btns{margin-top:36px;display:flex;flex-wrap:wrap;gap:14px}
+.notice{margin-top:22px;display:inline-block;padding:8px 14px;border:2px solid var(--pink);border-radius:6px;font-weight:700;font-size:15px;line-height:1.6}
+.notice b{color:var(--pink);font-weight:900}
+.band--pink .notice{border-color:var(--ink)}
+.band--pink .notice b{color:var(--ink)}
+.apply .notice{margin-top:12px;display:block;background:#FFE3F0;border-color:var(--pink)}
+.apply .notice b{color:var(--ink)}
+.btns{margin-top:28px;display:flex;flex-wrap:wrap;gap:14px}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:12px 28px;font-weight:900;font-size:17px;text-decoration:none;border-radius:6px}
 .btn--pink{background:var(--pink);color:var(--ink)}
 .btn--line{border:2px solid var(--paper);color:var(--paper);font-weight:700}
@@ -262,6 +268,7 @@ p{margin:0}
 <div class="hero__text">
 <h1>会員は、<br>チーム価格で。</h1>
 <p class="lead" style="max-width:30em">メーカーとのチーム提携により、ジュニアプロテイン「NEXT-18 PROTEIN」を、HappinessACとVIRDSの会員のみなさまは通常価格より3,000円安く購入できます。</p>
+<p class="notice">今回は<b>マスカットヨーグルト味のみ</b>の注文受付です</p>
 <div class="btns">
 <a class="btn btn--pink" href="#price">申し込み方法を見る</a>
 <a class="btn btn--line" href="#howto">飲み方を見る</a>
@@ -474,7 +481,8 @@ p{margin:0}
 <h2 class="h2" style="margin:0">会員価格。</h2>
 <div class="num order__price" style="white-space:nowrap">4,480<span class="unit">円（税込）</span></div>
 <p style="margin-top:16px;max-width:28em;font-weight:700">通常価格7,480円（税込）より3,000円引き。目安どおりに飲むと、1日あたり約224円です。</p>
-<p style="margin-top:8px;font-size:14px;font-weight:700">1袋400g／マスカットヨーグルト味（ココア味は一時品切れ中）</p>
+<p style="margin-top:8px;font-size:14px;font-weight:700">1袋400g</p>
+<p class="notice">今回は<b>マスカットヨーグルト味のみ</b>の注文受付です。ココア味は一時品切れ中です。</p>
 </div>
 <div class="order__box">
 <div style="font-weight:900;font-size:22px">お申し込みの流れ</div>
@@ -523,6 +531,7 @@ p{margin:0}
 
 <div class="apply">
 <div style="font-weight:900;font-size:clamp(20px,2.4vw,26px)">注文フォーム</div>
+<p class="notice">今回は<b>マスカットヨーグルト味のみ</b>の注文受付です。</p>
 <label class="agree" for="agree">
 <input type="checkbox" id="agree">
 <span>上の内容を読み、アレルギーと飲み方を確認しました</span>
